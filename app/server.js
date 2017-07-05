@@ -11,7 +11,7 @@ app.use(logger('combined'));
 app.get('/', function(req, res, next) {
     client.incr('visits', function(err, visits) {
         if (err) return next(err);
-        res.status(200).send('You have been viewed this page ' + visits + ' times');
+        res.status(200).send('This page has been viewed ' + visits + ' times');
     });
 });
 
