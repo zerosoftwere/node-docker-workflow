@@ -1,9 +1,10 @@
-const assert = require('assert');
+const request = require('supertest');
+const server = require('../server');
 
-describe('Array', function() {
-    describe('indexOf()', function() {
-        it('Should return -1 when the value is not present',function() {
-            assert.equal([1, 2, 3].indexOf(4), -1);
+describe('Test Server', function() {
+    describe('Index page', function() {
+        it('Should return a status code of 200',function() {
+            request(server).get('/').expect(200);
         });
     });
 })
