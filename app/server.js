@@ -3,7 +3,7 @@ const redis = require('redis');
 const logger = require('morgan');
 const path = require('path');
 
-var client = redis.createClient({port: 6379, host: 'localhost'});
+var client = redis.createClient({port: 6379, host: 'redis'});
 
 var app = express();
 app.use(express.static(path.join(__dirname, 'static')));
