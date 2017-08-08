@@ -7,8 +7,11 @@ dependencies:
     - pip install --upgrade docker-compose
 
 test:
+  pre:
+    - docker-compose pull
+    - docker-compose up -d
   override:
-    - docker-compose run --no-deps web npm test
+    - docker-compose run web npm test
 
 deployment:
   hub:

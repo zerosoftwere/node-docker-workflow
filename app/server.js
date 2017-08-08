@@ -1,9 +1,6 @@
 const express = require('express');
-const redis = require('redis');
 const logger = require('morgan');
 const path = require('path');
-
-var client = redis.createClient({port: 6379, host: 'redis'});
 
 var app = express();
 app.use(express.static(path.join(__dirname, 'static')));
@@ -12,10 +9,15 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.get('/', function(req, res, next) {
-    client.incr('visits', function(err, visits) {
+    let redis = app.get('redis') || next(new Error('Redis client not found'));
+    redis.incr('visits', function(err, visits) {
         if (err) return next(err);
         res.render('pages/index', {visits: visits});
     });
+});
+
+app.use(function(err, req, res, next) {
+    res.status(500).send(`Error: ${err.message}`);
 });
 
 module.exports = app;
